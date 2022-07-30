@@ -21,11 +21,11 @@ sealed interface AppDestination : Destination {
 }
 
 @Parcelize
-enum class DashboardDestination(
+enum class HomeDestination(
     val icon: @RawValue ImageVector,
     @StringRes val label: Int
 ) : Destination {
-    Dashboard(Icons.Default.Dashboard, R.string.dashboard),
+    Home(Icons.Default.Dashboard, R.string.home),
     Patcher(Icons.Default.Build, R.string.patcher),
     More(Icons.Default.MoreHoriz, R.string.more),
 }
