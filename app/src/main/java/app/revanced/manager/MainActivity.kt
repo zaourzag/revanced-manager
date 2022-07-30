@@ -1,54 +1,79 @@
 package app.revanced.manager
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import app.revanced.manager.ui.screens.MainScreen
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
 import app.revanced.manager.ui.theme.ReVancedManagerTheme
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import com.xinto.taxi.Destination
+import com.xinto.taxi.Taxi
+import com.xinto.taxi.rememberNavigator
+import kotlinx.parcelize.Parcelize
 
-val Context.settings: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+sealed interface SampleDestination : Destination {
+    @Parcelize
+    object RegularSample : SampleDestination
+
+    @Parcelize
+    object BackstackSample : SampleDestination
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
-
         super.onCreate(savedInstanceState)
-
-        val darkLight: Flow<Boolean> = baseContext.settings.data.map { preferences ->
-            preferences[booleanPreferencesKey("darklight")] ?: true
-        }
-
-        val dynamicColor: Flow<Boolean> = baseContext.settings.data.map { preferences ->
-            preferences[booleanPreferencesKey("dynamicTheming")] ?: true
-        }
-
         setContent {
-            val dlState = darkLight.collectAsState(initial = isSystemInDarkTheme())
-            val dcState = dynamicColor.collectAsState(initial = true)
+            ReVancedManagerTheme {
+                MainContent()
+            }
+        }
+    }
+}
 
-            ReVancedManagerTheme(
-                darkTheme = dlState.value,
-                dynamicColor = dcState.value
-            ) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MainScreen()
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@Composable
+fun MainContent() {
+    val navigator = rememberNavigator<SampleDestination>(initial = SampleDestination.ChooseScreen)
+    val topBarBehaviour = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarScrollState())
+
+    BackHandler {
+        if (navigator.currentDestination is SampleDestination.ChooseScreen) {
+            // finishActivity()
+            return@BackHandler
+        }
+        navigator.replace(SampleDestination.ChooseScreen)
+    }
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            SmallTopAppBar(
+                title = { Text("Taxi samples") },
+                scrollBehavior = topBarBehaviour
+            )
+        }
+    ) { paddingValues ->
+        Taxi(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            navigator = navigator,
+            transitionSpec = { fadeIn() with fadeOut() },
+        ) {
+            when (it) {
+                is SampleDestination.RegularSample -> {
+                    RegularScreen()
+                }
+                is SampleDestination.BackstackSample -> {
+                    BackstackScreen()
                 }
             }
         }
