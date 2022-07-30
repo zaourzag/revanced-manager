@@ -1,7 +1,8 @@
 package app.revanced.manager.util
 
-private const val ghOrg = "revanced"
-const val ghPatches = "$ghOrg/revanced-patches"
-const val ghPatcher = "$ghOrg/revanced-patcher"
-const val ghManager = "$ghOrg/revanced-manager"
-const val ghIntegrations = "$ghOrg/revanced-integrations"
+private const val team = "revanced"
+const val ghOrganization = "https://github.com/$team"
+const val ghPatches = "$team/revanced-patches"
+const val ghPatcher = "$team/revanced-patcher"
+const val ghManager = "$team/revanced-manager"
+const val ghIntegrations = "$team/revanced-integrations"

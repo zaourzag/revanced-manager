@@ -3,4 +3,7 @@
     <string name="home">Home</string>
     <string name="patcher">Patcher</string>
     <string name="more">More</string>
+    <string name="dynamic_color">Material You</string>
+    <string name="github">GitHub</string>
+    <string name="settings">Settings</string>
 </resources>
