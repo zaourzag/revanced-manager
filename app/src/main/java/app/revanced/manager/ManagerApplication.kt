@@ -11,7 +11,7 @@ class ManagerApplication : Application() {
 
         startKoin {
             androidContext(this@ManagerApplication)
-            modules(httpModule)
+            modules(httpModule, preferencesModule)
         }
     }
 }
