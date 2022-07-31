@@ -59,7 +59,8 @@ fun SettingsScreen(
                 trailingContent = {
                     Switch(
                         checked = prefs.dynamicColor,
-                        onCheckedChange = { prefs.dynamicColor = it })
+                        onCheckedChange = { prefs.dynamicColor = it }
+                    )
                 }
             )
 

@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ReVancedManagerTheme(dynamicColor = prefs.dynamicColor) {
-                val navigator = rememberBackstackNavigator<AppDestination>(AppDestination.Home)
+                val navigator = rememberBackstackNavigator<AppDestination>(AppDestination.Dashboard)
 
                 BackHandler {
                     navigator.pop()
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     transitionSpec = { fadeIn() with fadeOut() }
                 ) { destination ->
                     when (destination) {
-                        is AppDestination.Home -> MainRootScreen(navigator = navigator)
+                        is AppDestination.Dashboard -> MainRootScreen(navigator = navigator)
                         is AppDestination.Settings -> SettingsScreen(navigator = navigator)
                     }
                 }

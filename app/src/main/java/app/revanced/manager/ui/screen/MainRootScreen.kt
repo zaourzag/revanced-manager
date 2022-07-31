@@ -4,16 +4,13 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import app.revanced.manager.R
 import app.revanced.manager.ui.navigation.AppDestination
-import app.revanced.manager.ui.navigation.HomeDestination
+import app.revanced.manager.ui.navigation.DashboardDestination
 import com.xinto.taxi.BackstackNavigator
 import com.xinto.taxi.Taxi
 import com.xinto.taxi.rememberNavigator
@@ -25,7 +22,7 @@ fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
         decayAnimationSpec = rememberSplineBasedDecay(),
         state = rememberTopAppBarScrollState()
     )
-    val mainRootNavigator = rememberNavigator(HomeDestination.Home)
+    val mainRootNavigator = rememberNavigator(DashboardDestination.DASHBOARD)
     val currentDestination = mainRootNavigator.currentDestination
 
     Scaffold(
@@ -40,7 +37,7 @@ fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
         },
         bottomBar = {
             NavigationBar {
-                HomeDestination.values().forEach { destination ->
+                DashboardDestination.values().forEach { destination ->
                     NavigationBarItem(
                         selected = currentDestination == destination,
                         icon = { Icon(destination.icon, stringResource(destination.label)) },
@@ -60,9 +57,9 @@ fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
                 transitionSpec = { fadeIn() with fadeOut() }
             ) { destination ->
                 when (destination) {
-                    HomeDestination.Home -> HomeScreen()
-                    HomeDestination.Patcher -> HomeScreen()
-                    HomeDestination.More -> HomeScreen()
+                    DashboardDestination.DASHBOARD -> DashboardScreen()
+                    DashboardDestination.PATCHER -> DashboardScreen()
+                    DashboardDestination.SETTINGS -> DashboardScreen()
                 }
             }
         }

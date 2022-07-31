@@ -12,12 +12,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.revanced.manager.R
-import app.revanced.manager.ui.viewmodel.HomeViewModel
+import app.revanced.manager.ui.viewmodel.DashboardViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
+fun DashboardScreen(viewModel: DashboardViewModel = getViewModel()) {
     val context = LocalContext.current
 
     Column(
@@ -48,9 +48,36 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
                 Button(onClick = {
                     Toast.makeText(context, "Already up-to-date!", Toast.LENGTH_SHORT).show()
                 }) {
-                    Text(stringResource(R.string.update_manager))
+                    Text(
+                        text = stringResource(R.string.update_manager),
+                    )
                 }
             }
+        }
+
+        HeadlineWithCard(headline = R.string.patched_apps) {
+            Row(
+                modifier = Modifier
+                    .padding(16.dp, 10.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column {
+                    UpdatesAvailable(
+                        label = R.string.updates_available,
+                        amount = 2 // TODO
+                    )
+                }
+                Button(onClick = {
+                    Toast.makeText(context, "Already up-to-date!", Toast.LENGTH_SHORT).show()
+                }) {
+                    Text(
+                        text = stringResource(R.string.update_all),
+                    )
+                }
+            }
+
         }
     }
 }
@@ -59,13 +86,24 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
 fun CommitDate(@StringRes label: Int, date: String) {
     Row {
         Text(
-            text = stringResource(label) + ": ",
+            text = "${stringResource(label)}: ",
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = date,
             style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+fun UpdatesAvailable(@StringRes label: Int, amount: Int) {
+    Row {
+        Text(
+            text = "${stringResource(label)} ($amount)",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -79,12 +117,12 @@ fun HeadlineWithCard(
     Column {
         Text(
             text = stringResource(headline),
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineSmall
         )
-        Card(
+        ElevatedCard(
             modifier = Modifier
-                .padding(top = 6.dp)
-                .fillMaxWidth()
+                .padding(top = 12.dp)
+                .fillMaxWidth(),
         ) { content() }
     }
 }

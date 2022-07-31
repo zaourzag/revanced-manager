@@ -12,7 +12,7 @@ import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeViewModel(private val repository: GitHubRepository) : ViewModel() {
+class DashboardViewModel(private val repository: GitHubRepository) : ViewModel() {
     var patcherCommitDate by mutableStateOf("")
         private set
     var managerCommitDate by mutableStateOf("")
