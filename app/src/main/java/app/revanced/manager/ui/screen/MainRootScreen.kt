@@ -33,16 +33,8 @@ fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            MediumTopAppBar(
+            SmallTopAppBar(
                 title = { Text(stringResource(mainRootNavigator.currentDestination.label)) },
-                actions = {
-                    IconButton(onClick = { navigator.push(AppDestination.Settings) }) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(R.string.settings)
-                        )
-                    }
-                },
                 scrollBehavior = scrollBehavior
             )
         },

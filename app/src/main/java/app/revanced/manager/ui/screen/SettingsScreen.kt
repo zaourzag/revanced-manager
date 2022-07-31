@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.revanced.manager.R
+import app.revanced.manager.ui.component.SocialItem
 import app.revanced.manager.ui.navigation.AppDestination
 import app.revanced.manager.ui.viewmodel.SettingsViewModel
 import com.xinto.taxi.BackstackNavigator
@@ -52,7 +53,6 @@ fun SettingsScreen(
                 .padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-
             ListItem(
                 modifier = Modifier.clickable { prefs.dynamicColor = !prefs.dynamicColor },
                 headlineText = { Text(stringResource(R.string.dynamic_color)) },
@@ -64,17 +64,7 @@ fun SettingsScreen(
             )
 
             Divider()
-
-            ListItem(
-                modifier = Modifier.clickable { viewModel.openGitHub() },
-                leadingContent = {
-                    Icon(
-                        imageVector = Icons.Default.Code,
-                        contentDescription = stringResource(R.string.github)
-                    )
-                },
-                headlineText = { Text(stringResource(R.string.github)) }
-            )
+            SocialItem(R.string.github, Icons.Default.Code, viewModel::openGitHub)
         }
     }
 }

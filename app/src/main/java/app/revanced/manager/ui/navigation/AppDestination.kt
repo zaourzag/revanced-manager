@@ -3,7 +3,7 @@ package app.revanced.manager.ui.navigation
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import app.revanced.manager.R
@@ -25,7 +25,7 @@ enum class HomeDestination(
     val icon: @RawValue ImageVector,
     @StringRes val label: Int
 ) : Destination {
-    Home(Icons.Default.Dashboard, R.string.home),
+    Home(Icons.Default.Home, R.string.home),
     Patcher(Icons.Default.Build, R.string.patcher),
     More(Icons.Default.MoreHoriz, R.string.more),
 }
