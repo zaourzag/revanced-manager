@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                 val navigator = rememberBackstackNavigator<AppDestination>(AppDestination.Dashboard)
 
                 BackHandler {
-                    navigator.pop()
+                    if (!navigator.pop()) finish()
                 }
 
                 Taxi(

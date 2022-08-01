@@ -105,11 +105,11 @@ fun DashboardScreen(viewModel: DashboardViewModel = getViewModel()) {
                     .padding(horizontal = padHoriz)
                     .padding(bottom = padVert)
                     .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 ApplicationItem(
                     name = "ReVanced",
                     released = "Released 2 days ago",
-                    onClickUpdate = { /*TODO*/ },
                     icon = { Icon(Icons.Default.Dashboard, "ReVanced") }
                 ) {
                     ChangelogText(
@@ -125,7 +125,6 @@ fun DashboardScreen(viewModel: DashboardViewModel = getViewModel()) {
                 ApplicationItem(
                     name = "ReReddit",
                     released = "Released 1 month ago",
-                    onClickUpdate = { /*TODO*/ },
                     icon = { Icon(Icons.Default.Build, "ReReddit") }
                 ) {
                     ChangelogText(

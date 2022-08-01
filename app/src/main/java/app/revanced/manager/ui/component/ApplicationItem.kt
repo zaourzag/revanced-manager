@@ -16,7 +16,6 @@ import app.revanced.manager.R
 fun ApplicationItem(
     name: String,
     released: String, // TODO: temp
-    onClickUpdate: () -> Unit,
     icon: @Composable () -> Unit,
     expandedContent: @Composable () -> Unit
 ) {
@@ -43,9 +42,6 @@ fun ApplicationItem(
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     arrowButton()
-                    OutlinedButton(onClick = onClickUpdate) {
-                        Text(stringResource(R.string.update))
-                    }
                 }
             }
         },
