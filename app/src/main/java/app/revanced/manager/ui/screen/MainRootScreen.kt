@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import app.revanced.manager.ui.navigation.AppDestination
 import app.revanced.manager.ui.navigation.DashboardDestination
 import com.xinto.taxi.BackstackNavigator
@@ -20,7 +21,7 @@ import com.xinto.taxi.rememberNavigator
 fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
         decayAnimationSpec = rememberSplineBasedDecay(),
-        state = rememberTopAppBarScrollState()
+        state = rememberTopAppBarState()
     )
     val mainRootNavigator = rememberNavigator(DashboardDestination.DASHBOARD)
     val currentDestination = mainRootNavigator.currentDestination
@@ -31,7 +32,12 @@ fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             SmallTopAppBar(
-                title = { Text(stringResource(mainRootNavigator.currentDestination.label)) },
+                title = {
+                    Text(
+                        text = stringResource(mainRootNavigator.currentDestination.label),
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                },
                 scrollBehavior = scrollBehavior
             )
         },

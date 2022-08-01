@@ -28,7 +28,7 @@ fun SettingsScreen(
     navigator: BackstackNavigator<AppDestination>
 ) {
     val prefs = viewModel.prefs
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarScrollState())
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = Modifier,

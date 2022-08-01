@@ -43,7 +43,7 @@ android {
 dependencies {
     // AndroidX core
     implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.core:core-splashscreen:1.0.0-rc01")
+    implementation("androidx.core:core-splashscreen:1.0.0")
 
     // AndroidX activity
     implementation("androidx.activity:activity-compose:1.6.0-alpha05")
@@ -57,7 +57,7 @@ dependencies {
     val composeVersion = "1.3.0-alpha01"
     implementation("androidx.compose.ui:ui:${composeVersion}")
     debugImplementation("androidx.compose.ui:ui-tooling:${composeVersion}")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha14")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha15")
     implementation("androidx.compose.material:material-icons-extended:${composeVersion}")
 
     // Accompanist

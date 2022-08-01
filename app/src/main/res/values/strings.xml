@@ -8,7 +8,9 @@
     <string name="updates">Updates</string>
     <string name="manager">Manager</string>
     <string name="update_manager">Update Manager</string>
-    <string name="patched_apps">Patched Applications</string>
+    <string name="patched_apps">Installed</string>
     <string name="update_all">Update All</string>
-    <string name="updates_available">Updates Available</string>
+    <string name="updates_available">Available updates</string>
+    <string name="expand">Expand</string>
+    <string name="update">Update</string>
 </resources>

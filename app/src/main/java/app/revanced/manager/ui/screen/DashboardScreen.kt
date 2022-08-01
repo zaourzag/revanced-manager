@@ -3,7 +3,15 @@ package app.revanced.manager.ui.screen
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,26 +19,31 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.revanced.manager.R
+import app.revanced.manager.ui.component.ApplicationItem
+import app.revanced.manager.ui.component.HeadlineWithCard
 import app.revanced.manager.ui.viewmodel.DashboardViewModel
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(viewModel: DashboardViewModel = getViewModel()) {
     val context = LocalContext.current
+    val padHoriz = 16.dp
+    val padVert = 10.dp
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 14.dp),
+            .padding(horizontal = 18.dp)
+            .verticalScroll(state = rememberScrollState()),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         HeadlineWithCard(R.string.updates) {
             Row(
                 modifier = Modifier
-                    .padding(16.dp, 10.dp)
+                    .padding(horizontal = padHoriz, vertical = padVert)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
@@ -45,39 +58,101 @@ fun DashboardScreen(viewModel: DashboardViewModel = getViewModel()) {
                         date = viewModel.managerCommitDate
                     )
                 }
-                Button(onClick = {
-                    Toast.makeText(context, "Already up-to-date!", Toast.LENGTH_SHORT).show()
-                }) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Button(
+                        enabled = false, // needs update
+                        onClick = {
+                            Toast.makeText(context, "Already up-to-date!", Toast.LENGTH_SHORT)
+                                .show()
+                        },
+                    ) { Text(stringResource(R.string.update_manager)) }
                     Text(
-                        text = stringResource(R.string.update_manager),
+                        text = "No updates available",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 10.sp,
                     )
                 }
             }
         }
 
-        HeadlineWithCard(headline = R.string.patched_apps) {
+        HeadlineWithCard(R.string.patched_apps) {
             Row(
                 modifier = Modifier
-                    .padding(16.dp, 10.dp)
+                    .padding(horizontal = padHoriz, vertical = padVert)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column {
-                    UpdatesAvailable(
-                        label = R.string.updates_available,
-                        amount = 2 // TODO
+                    val amount = 2 // TODO
+                    Text(
+                        text = "${stringResource(R.string.updates_available)}: $amount",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
                     )
                 }
-                Button(onClick = {
-                    Toast.makeText(context, "Already up-to-date!", Toast.LENGTH_SHORT).show()
-                }) {
-                    Text(
-                        text = stringResource(R.string.update_all),
+                Button(
+                    enabled = true, // needs update
+                    onClick = {
+                        Toast.makeText(context, "Already up-to-date!", Toast.LENGTH_SHORT).show()
+                    }
+                ) { Text(stringResource(R.string.update_all)) }
+            }
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = padHoriz)
+                    .padding(bottom = padVert)
+                    .fillMaxWidth(),
+            ) {
+                ApplicationItem(
+                    name = "ReVanced",
+                    released = "Released 2 days ago",
+                    onClickUpdate = { /*TODO*/ },
+                    icon = { Icon(Icons.Default.Dashboard, "ReVanced") }
+                ) {
+                    ChangelogText(
+                        """
+                            fix: aaaaaa
+                            fix: aaaaaa
+                            fix: aaaaaa
+                            fix: aaaaaa
+                            fix: aaaaaa
+                        """.trimIndent()
+                    )
+                }
+                ApplicationItem(
+                    name = "ReReddit",
+                    released = "Released 1 month ago",
+                    onClickUpdate = { /*TODO*/ },
+                    icon = { Icon(Icons.Default.Build, "ReReddit") }
+                ) {
+                    ChangelogText(
+                        """
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                            fix: bbbbbb
+                        """.trimIndent()
                     )
                 }
             }
-
         }
     }
 }
@@ -98,31 +173,18 @@ fun CommitDate(@StringRes label: Int, date: String) {
 }
 
 @Composable
-fun UpdatesAvailable(@StringRes label: Int, amount: Int) {
-    Row {
-        Text(
-            text = "${stringResource(label)} ($amount)",
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HeadlineWithCard(
-    @StringRes headline: Int,
-    content: @Composable () -> Unit
-) {
+fun ChangelogText(text: String) {
     Column {
         Text(
-            text = stringResource(headline),
-            style = MaterialTheme.typography.headlineSmall
+            text = "Changelog",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontWeight = FontWeight.Bold
         )
-        ElevatedCard(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .fillMaxWidth(),
-        ) { content() }
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
