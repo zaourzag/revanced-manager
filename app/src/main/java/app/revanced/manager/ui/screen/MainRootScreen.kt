@@ -65,7 +65,7 @@ fun MainRootScreen(navigator: BackstackNavigator<AppDestination>) {
                 when (destination) {
                     DashboardDestination.DASHBOARD -> DashboardScreen()
                     DashboardDestination.PATCHER -> DashboardScreen()
-                    DashboardDestination.SETTINGS -> DashboardScreen()
+                    DashboardDestination.SETTINGS -> SettingsScreen()
                 }
             }
         }

@@ -15,9 +15,6 @@ import kotlinx.parcelize.RawValue
 sealed interface AppDestination : Destination {
     @Parcelize
     object Dashboard : AppDestination
-
-    @Parcelize
-    object Settings : AppDestination
 }
 
 @Parcelize

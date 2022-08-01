@@ -40,7 +40,6 @@ class MainActivity : ComponentActivity() {
                 ) { destination ->
                     when (destination) {
                         is AppDestination.Dashboard -> MainRootScreen(navigator = navigator)
-                        is AppDestination.Settings -> SettingsScreen(navigator = navigator)
                     }
                 }
             }
