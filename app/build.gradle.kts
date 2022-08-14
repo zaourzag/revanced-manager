@@ -14,7 +14,7 @@ repositories {
     maven("https://jitpack.io")
     google()
     maven {
-        url = uri("https://maven.pkg.github.com/revanced/revanced-patcher")
+        url = uri("https://nexus.zakariao.nl/repository/maven-releases")
         credentials {
             username = (project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")) as String
             password = (project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")) as String
